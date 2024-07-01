@@ -3,9 +3,9 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import Header from './components/Auth/Header';
 import Sidebar from './components/Auth/Sidebar';
 import Chat from './components/Auth/Chat';
-import DirectMessages from './components/Auth/DirectMessages'; // Import DirectMessages component
-import Notifications from './components/Auth/Notifications'; // Import Notifications component
-import SearchBar from './components/Auth/SearchBar'; // Import SearchBar component
+import DirectMessages from './components/Auth/DirectMessages'; 
+import Notifications from './components/Auth/Notifications'; 
+import SearchBar from './components/Auth/SearchBar'; 
 import Register from './components/Auth/Register/Register';
 import Login from './components/Auth/Login/Login';
 import ConfirmMail from './components/Auth/ConfirmMail/ConfirmMail';

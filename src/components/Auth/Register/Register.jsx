@@ -1,14 +1,9 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios'
 
 
 function Register() {
-    const [formData, setFormData] = useState({
-        username: '',
-        email: '',
-        password: '',
-        confirmPassword: ''
-    });
-
     const [errors, setErrors] = useState({
         username: '',
         email: '',
@@ -18,38 +13,26 @@ function Register() {
 
     const [showAlert, setShowAlert] = useState(false); // State to control alert visibility
 
+    const [userEmail,setUserEmail] = useState("");
+
     const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value
-        });
-        // Clear corresponding error when user starts typing again
-        setErrors({
-            ...errors,
-            [name]: ''
-        });
-    };
-
-    const handleSubmit = (e) => {
         e.preventDefault();
-        // Validation logic (simple example)
-        let newErrors = {};
-        if (formData.email === '') {
-            newErrors.email = 'Email is required';
-        } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-            newErrors.email = 'Email is invalid';
-        }
-      
-        setErrors(newErrors);
-        setShowAlert(Object.keys(newErrors).length > 0); // Show alert if there are errors
-
-        // If there are no errors, you can proceed with form submission
-        if (Object.keys(newErrors).length === 0) {
-            // Perform form submission logic here (e.g., API call, redirect)
-            console.log('Form submitted:', formData);
-        }
+        setUserEmail(e.target.value);
     };
+
+    const handleSubmit = async () => {
+        const userObject = {
+            email : userEmail
+        };
+
+        try{
+            const result = await axios.post('http://localhost:3000/user/register', userObject);
+            console.log(result.data);
+        }catch(e){
+            console.log(e.error);
+        }
+    }
+
 
     return (
         <div className="min-h-screen bg-gray-300 flex items-center justify-center">
@@ -59,7 +42,7 @@ function Register() {
                 </div>
                 <h1 className="text-2xl font-bold mb-4 text-center">First of all, enter your email address</h1>
                 <p className="text-gray-600 text-center mb-4">We suggest using the email address that you use at work.</p>
-                <form onSubmit={handleSubmit}>
+                <form >
                     {/* Email Input */}
                     <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">Your Email</label>
                     <div className="relative mb-4">
@@ -71,17 +54,14 @@ function Register() {
                         </div>
                         <input
                             type="text"
-                            id="email"
-                            name="email"
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
                             placeholder="name@work-email.com"
-                            value={formData.email}
                             onChange={handleInputChange}
                         />
                     </div>
 
                     {/* Continue Button */}
-                    <button type="submit" className="bg-purple-700 text-white rounded-lg w-full py-2 mb-4">Continue</button>
+                    <button onClick={handleSubmit} type="submit" className="bg-purple-700 text-white rounded-lg w-full py-2 mb-4"><Link to='/confirmmail'>Continue</Link></button>
 
                     {/* Or Divider */}
                     <div className="flex items-center mb-4">

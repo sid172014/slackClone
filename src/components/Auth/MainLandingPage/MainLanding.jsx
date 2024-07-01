@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const MainLanding = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -34,8 +35,8 @@ const MainLanding = () => {
             </ul>
           </div>
           <div className="hidden md:flex items-center space-x-6">
-            <button className={`text-md font-medium border px-6 py-2 rounded ${scrolled ? 'text-[#4A154B] border-[#4A154B] bg-white' : 'text-white border-white bg-[#4A154B]'}`}>TALK TO SALES</button>
-            <button className={`text-md font-medium border px-6 py-2 rounded ${scrolled ? 'text-white border-white bg-[#4A154B]' : 'text-[#4A154B] border-[#4A154B] bg-white'}`}>CREATE A NEW WORKSPACE</button>
+            <button className={`text-md font-medium border px-6 py-2 rounded ${scrolled ? 'text-[#4A154B] border-[#4A154B] bg-white' : 'text-white border-white bg-[#4A154B]'}`}><Link to={'/login'}>Already a user?</Link></button>
+            <button className={`text-md font-medium border px-6 py-2 rounded ${scrolled ? 'text-white border-white bg-[#4A154B]' : 'text-[#4A154B] border-[#4A154B] bg-white'}`}><Link to={'/register'}>CREATE A NEW WORKSPACE</Link></button>
           </div>
         </nav>
       </header>
@@ -45,7 +46,7 @@ const MainLanding = () => {
         <div className="container mx-auto text-center px-6 mt-20">
           <h1 className="text-4xl md:text-6xl font-bold mb-4">Welcome to Slack</h1>
           <p className="text-lg md:text-xl mb-6">Where teams collaborate efficiently and effectively.</p>
-          <button className="bg-white text-[#4A154B] px-8 py-3 rounded-lg text-lg">Get Started</button>
+          <button className="bg-white text-[#4A154B] px-8 py-3 rounded-lg text-lg"><Link to={'/register'}>GET STARTED</Link></button>
         </div>
         <div className="mt-8 flex justify-center">
           <img src="https://d34u8crftukxnk.cloudfront.net/slackpress/prod/sites/6/hero-5-ways-to-use-apps-workflows%402x.en_.EN_.jpg" alt="Hero Image" className="w-full max-w-md h-auto rounded-lg" />

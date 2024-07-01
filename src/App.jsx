@@ -13,7 +13,6 @@ import LandingPage from './components/Auth/Landing/Landing';
 import { MessageProvider } from './components/Auth/MessageContext';
 import MainLanding from './components/Auth/MainLandingPage/MainLanding';
 
-
 function App() {
   return (
     <Router>
@@ -49,41 +48,41 @@ function AppContent() {
   const showSidebarAndHeader = () => {
     const { pathname } = location;
     // List of paths where Sidebar and Header should not be shown
-    const excludedPaths = ['/login', '/register', '/confirmmail', '/landing','/main'];
+    const excludedPaths = ['/login', '/register', '/confirmmail', '/landing', '/main'];
     return !excludedPaths.includes(pathname);
   };
 
   return (
     <>
-      {showSidebarAndHeader() && (
-        <div className="h-screen flex flex-col">
-          <Header searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-          <MessageProvider>
-          <div className="flex flex-grow">
-            <Sidebar channels={filteredChannels} handleCreateChannel={handleCreateChannel} />
-            <Routes>
-              {/* Existing routes */}
-              <Route path="/channel/:channelId" element={<Chat />} />
-              <Route path="/directmessages/:id" element={<DirectMessages />} />
-              <Route path="/notifications" element={<Notifications />} />
-              {/* New route for SearchBar component */}
-              <Route path="/search" element={<SearchBar channels={filteredChannels} messages={[]} />} />
-              <Route path="/" element={<div className="flex-grow flex justify-center items-center"><h1>Welcome</h1></div>} />
-              
-            </Routes>
-          </div>
-          </MessageProvider>
-      
-        </div>
-      )}
-
-      {/* Routes without Sidebar and Header */}
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/confirmmail" element={<ConfirmMail />} />
         <Route path="/landing" element={<LandingPage />} />
-        <Route path='/main' element={<MainLanding/>}/>
+        <Route path="/" element={<MainLanding />} />
+        
+        {showSidebarAndHeader() && (
+          <Route
+            path="*"
+            element={
+              <div className="h-screen flex flex-col">
+                <Header searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+                <MessageProvider>
+                  <div className="flex flex-grow">
+                    <Sidebar channels={filteredChannels} handleCreateChannel={handleCreateChannel} />
+                    <Routes>
+                      <Route path="/channel/:channelId" element={<Chat />} />
+                      <Route path="/directmessages/:id" element={<DirectMessages />} />
+                      <Route path="/notifications" element={<Notifications />} />
+                      <Route path="/search" element={<SearchBar channels={filteredChannels} messages={[]} />} />
+                      <Route path="/channel" element={<div className="bg-[#1A1D21] text-white flex-grow flex justify-center items-center "><h1>Welcome</h1></div>} />
+                    </Routes>
+                  </div>
+                </MessageProvider>
+              </div>
+            }
+          />
+        )}
       </Routes>
     </>
   );

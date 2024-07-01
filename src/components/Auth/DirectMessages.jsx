@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useMessageContext } from './MessageContext';
+import axios from 'axios';
 
 const DirectMessageChat = () => {
   const { id } = useParams(); // Get user ID from route parameter
@@ -9,6 +10,19 @@ const DirectMessageChat = () => {
   const [isTyping, setIsTyping] = useState(false);
   const typingTimeoutRef = useRef(null);
   const messagesEndRef = useRef(null);
+
+  const [email,setEmail] = useState("");
+
+    useEffect(() => {
+        const getData = async () => {
+            const result = await axios.get('http://localhost:3000/user/getinfo');
+            const trimmedMail = result.data.email.replace('@gmail.com','');
+            console.log(trimmedMail);
+            setEmail(trimmedMail);
+        };
+
+        getData();
+    },[]);
 
   // Example currentUserId for testing purposes
   const currentUserId = 'sd'; // Replace with your actual current user ID implementation
@@ -98,7 +112,7 @@ const DirectMessageChat = () => {
         {state.messages.map((message, index) => (
           <div key={index} className={`flex flex-col items-${message.senderId === currentUserId ? 'end' : 'start'} my-2`}>
             <div className={`flex items-center space-x-2 mb-1 ${message.senderId === currentUserId ? 'justify-end rtl:space-x-reverse' : ''}`}>
-              <span className={`text-xs font-medium text-gray-500 ${message.senderId === currentUserId ? 'self-end' : ''}`}>{message.senderId === currentUserId ? 'You' : getUserName(message.senderId)}</span>
+              <span className={`text-xs font-medium text-gray-500 ${message.senderId === currentUserId ? 'self-end' : ''}`}>{email.length > 0 ? email : "Null"}</span>
               <span className="text-xs text-gray-500">{message.time}</span>
             </div>
             <div className={`p-2 rounded-lg max-w-[75%] ${message.senderId === currentUserId ? 'bg-blue-100 text-black self-end' : 'bg-gray-200 self-start'}`}>

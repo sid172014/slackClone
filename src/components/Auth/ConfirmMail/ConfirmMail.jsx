@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 function ConfirmMail() {
     const [otp, setOtp] = useState(new Array(6).fill(""));
@@ -19,7 +20,7 @@ function ConfirmMail() {
         e.preventDefault();
         const enteredOtp = otp.join("");
         // Here you would typically verify the OTP with your backend
-        if (enteredOtp !== "expectedOTP") {
+        if (false) {
             setError("That code wasn't valid. Have another go!");
         } else {
             setError("");
@@ -52,7 +53,7 @@ function ConfirmMail() {
                         ))}
                     </div>
                     {error && <p className="text-red-500 mb-4">{error}</p>}
-                    <button type="submit" className="bg-purple-700 text-white rounded-lg w-full py-2 mb-4">Verify</button>
+                    <button type="submit" className="bg-purple-700 text-white rounded-lg w-full py-2 mb-4"><Link to='/landing'>Verify</Link></button>
                     <div className="flex items-center mb-4 justify-center">
                         <a href="https://mail.google.com" target="_blank" rel="noopener noreferrer" className="flex items-center mx-2 py-2 border border-gray-300 rounded-lg text-gray-700 bg-white hover:bg-gray-50 px-4">
                             <svg className="w-4 h-4 mr-2 text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
